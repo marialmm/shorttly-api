@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validateSchema } from "./../middlewares/joiValidationMiddleware.js";
 import { signinSchema, signupSchema } from "./../schemas/usersSchemas.js";
-import { signin, signup } from "./../controllers/usersControllers.js";
+import { getRanking, getUser, signin, signup } from "./../controllers/usersControllers.js";
 
 const usersRouter = Router();
 
@@ -19,5 +19,7 @@ usersRouter.post(
     },
     signin
 );
+usersRouter.get("/users/:id", getUser);
+usersRouter.get("/users/ranking", getRanking);
 
 export default usersRouter;
