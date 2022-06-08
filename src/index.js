@@ -4,12 +4,14 @@ import chalk from "chalk";
 
 import usersRouter from "./routers/usersRouter.js";
 import urlsRouter from "./routers/urlsRouter.js";
+import authRouter from "./routers/authRouter.js";
 
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
+app.use(authRouter);
 app.use(usersRouter);
 app.use(urlsRouter);
 
