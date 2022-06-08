@@ -25,5 +25,24 @@ export async function signup(req, res) {
 }
 
 export async function signin(req, res) {
-    
+    try{
+        const user = await db.query(
+            `SELECT * FROM users
+            WHERE email = $1
+            AND password = $2
+            `, [req.body.email, req.body.password]
+        );
+
+        if(user.rows.length === 0) {
+            res.sendStatus(401);
+            return;
+        }
+
+        //TODO: create token and row in sessions 
+
+        res.sendStatus(200);
+    } catch(error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
 }
