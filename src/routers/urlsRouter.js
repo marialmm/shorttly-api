@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { validateSchema } from "./../middlewares/joiValidationMiddleware.js";
 import { urlSchema } from "./../schemas/urlSchemas.js";
-import { postShorten, getUrl } from "./../controllers/urlsControllers.js";
+import { postShorten, getUrl, openUrl } from "./../controllers/urlsControllers.js";
 import validateToken from "./../middlewares/authMiddleware.js";
 
 const urlsRouter = Router();
@@ -15,5 +15,6 @@ urlsRouter.post(
     postShorten
 );
 urlsRouter.get("/urls/:id", getUrl);
+urlsRouter.get("/urls/open/:shortUrl", openUrl);
 
 export default urlsRouter;
