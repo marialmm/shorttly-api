@@ -4,7 +4,7 @@ import db from "./../db.js";
 
 export async function postShorten(req, res) {
     const url = req.body.url;
-    const userId = res.locals.userId;
+    const userId = res.locals.user.id;
     const shortUrl = nanoid();
 
     try {
@@ -77,7 +77,7 @@ export async function openUrl(req, res) {
 }
 
 export async function deleteUrl(req, res) {
-    const userId = res.locals.userId;
+    const userId = res.locals.user.id;
     const id = parseInt(req.params.id);
 
     const urlResult = await db.query(

@@ -6,7 +6,7 @@ export default async function validateToken(req, res, next) {
 
     try{
         const userResult = await db.query(
-            `SELECT users.id FROM users
+            `SELECT users.id, users.name FROM users
             JOIN sessions ON sessions."userId" = users.id
             WHERE sessions.token = $1;
             `, [token]
@@ -17,7 +17,7 @@ export default async function validateToken(req, res, next) {
             return;
         }
 
-        res.locals.userId = userResult.rows[0].id;
+        res.locals.user = userResult.rows[0];
         next();
     } catch (error) {
         console.log(error);
