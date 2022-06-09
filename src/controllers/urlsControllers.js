@@ -20,3 +20,25 @@ export async function postShorten(req, res) {
         res.sendStatus(500);
     }
 };
+
+export async function getUrl(req, res) {
+    const id = parseInt(req.params.id);
+
+    try{
+        const urlResult = await db.query(
+            `SELECT id, "shortUrl", url
+            FROM urls
+            WHERE id = $1;`, [id]
+        );
+        
+        if (urlResult.rows.length === 0){
+            res.sendStatus(404);
+            return;
+        }
+
+        res.status(200).send(urlResult.rows);
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+}
