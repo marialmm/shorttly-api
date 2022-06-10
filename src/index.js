@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-import chalk from "chalk";
 import cors from "cors";
 
 import usersRouter from "./routers/usersRouter.js";
@@ -20,4 +19,4 @@ app.use(urlsRouter);
 
 const port = process.env.PORT;
 
-app.listen(port, () => console.log(chalk.green(`Server running on port ${port}`)));
+app.listen(port, () => console.log(`Server running on port ${port}`));
