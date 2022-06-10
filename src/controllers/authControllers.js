@@ -22,7 +22,7 @@ export async function signup(req, res) {
         res.sendStatus(201);
     } catch (error) {
         console.log(error);
-        if(error.code === "23505"){
+        if (error.code === "23505") {
             res.sendStatus(409);
             return;
         }
@@ -58,7 +58,25 @@ export async function signin(req, res) {
             [user.id, token]
         );
 
-        res.status(200).send(token);
+        res.status(200).send({ token, user: { id: user.id, name: user.name } });
+    } catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+}
+
+export async function signout(req, res) {
+    const { authorization } = req.headers;
+    const token = authorization?.replace("Bearer ", "");
+
+    try {
+        await db.query(
+            `DELETE FROM sessions
+            WHERE token = $1`,
+            [token]
+        );
+
+        res.sendStatus(204);
     } catch (error) {
         console.log(error);
         res.sendStatus(500);
