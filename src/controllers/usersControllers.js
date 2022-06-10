@@ -49,11 +49,17 @@ export async function getRanking(req, res) {
         const rankingResult = await db.query(
             `SELECT users.id, users.name, COUNT(urls.url) AS "linksCount", SUM(urls."visitCount") AS "visitCount" 
             FROM users
-            JOIN urls ON users.id = urls."userId"
+            LEFT JOIN urls ON users.id = urls."userId"
             GROUP BY users.id, users.name
             ORDER BY "visitCount"
             LIMIT 10;`
         );
+
+        rankingResult.rows.forEach(ranking => {
+            if(ranking.visitCount === null){
+                ranking.visitCount = 0;
+            }
+        })
 
         res.status(200).send(rankingResult.rows);
     } catch (error) {
